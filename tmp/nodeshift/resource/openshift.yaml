@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      name: flags
+      namespace: flags-game
+      labels:
+        project: flags
+        version: 0.1.0
+        provider: nodeshift
+        app: flags
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 2
+      selector:
+        app: flags
+        project: flags
+        provider: nodeshift
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - flags
+            from:
+              kind: ImageStreamTag
+              namespace: flags-game
+              name: 'flags:latest'
+      template:
+        metadata:
+          labels:
+            project: flags
+            version: 0.1.0
+            provider: nodeshift
+            app: flags
+        spec:
+          containers:
+            - image: flags
+              name: flags
+              securityContext:
+                privileged: false
+              ports:
+                - containerPort: 8080
+                  name: http
+                  protocol: TCP
+              env: []
+  - apiVersion: v1
+    kind: Service
+    spec:
+      selector:
+        project: flags
+        provider: nodeshift
+      ports:
+        - protocol: TCP
+          port: 8080
+          targetPort: 8080
+          name: http
+      type: ClusterIP
+    metadata:
+      name: flags
+      namespace: flags-game
+      labels:
+        project: flags
+        version: 0.1.0
+        provider: nodeshift
+  - apiVersion: route.openshift.io/v1
+    kind: Route
+    spec:
+      to:
+        kind: Service
+        name: flags
+      port:
+        targetPort: 8080
+    metadata:
+      name: flags
+      labels:
+        project: flags
+        version: 0.1.0
+        provider: nodeshift
