@@ -4,7 +4,7 @@
 
 .title-header {
   display: flex;
-  height: 40vh;
+  height: 30vh;
   background-size: cover;
   background-repeat: no-repeat;
   justify-content: center;
@@ -20,7 +20,7 @@
 
 @media (max-width: 450px) {
   .title-header {
-    height: 24vh;
+    height: 14vh;
   }
 
   .title-text {
