@@ -7,12 +7,16 @@
       "kind": "DeploymentConfig",
       "metadata": {
         "name": "flags",
-        "namespace": "flags-game",
+        "namespace": "flags",
         "labels": {
           "project": "flags",
           "version": "0.1.0",
           "provider": "nodeshift",
           "app": "flags"
+        },
+        "annotations": {
+          "nodeshift/git-branch": "master",
+          "nodeshift/git-commit": "606369aef3a8ba35c93446d500b4f5f884d9bddf"
         }
       },
       "spec": {
@@ -36,7 +40,7 @@
               ],
               "from": {
                 "kind": "ImageStreamTag",
-                "namespace": "flags-game",
+                "namespace": "flags",
                 "name": "flags:latest"
               }
             }
@@ -49,6 +53,10 @@
               "version": "0.1.0",
               "provider": "nodeshift",
               "app": "flags"
+            },
+            "annotations": {
+              "nodeshift/git-branch": "master",
+              "nodeshift/git-commit": "606369aef3a8ba35c93446d500b4f5f884d9bddf"
             }
           },
           "spec": {
@@ -93,11 +101,15 @@
       },
       "metadata": {
         "name": "flags",
-        "namespace": "flags-game",
+        "namespace": "flags",
         "labels": {
           "project": "flags",
           "version": "0.1.0",
           "provider": "nodeshift"
+        },
+        "annotations": {
+          "nodeshift/git-branch": "master",
+          "nodeshift/git-commit": "606369aef3a8ba35c93446d500b4f5f884d9bddf"
         }
       }
     },
